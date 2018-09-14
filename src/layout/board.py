@@ -27,7 +27,9 @@ class Board:
         length = frame - offset
         height = length * 2 if length * 2 <= self.height else self.height
 
-        return [((idx * frame, 0), length, height * 1 if self.y_down_direction else -1) for idx in range(0, size)]
+        print(f'length={length}', f'offset = {offset}', f'height={height}')
+
+        return [((idx * frame, 0), length, (height / 2) * 1 if self.y_down_direction else -1) for idx in range(0, size)]
 
     def digitalize(self, num: int) -> [Digit]:
         chars = [c for c in str(num)]
