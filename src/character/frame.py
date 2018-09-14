@@ -24,13 +24,13 @@ position_map = {
 
 
 class VirtualFrame:
-    def __init__(self, left_top: Tuple[int, int], length: int, half_height: int):
+    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
         """
-        :param left_top: frame coordinate
+        :param origin: frame coordinate
         :param length: length in x axle
         :param half_height: half of height in y axle
         """
-        x, y = left_top
+        x, y = origin
         self._left_top = (x, y)
         self._left_median = (x, y + half_height)
         self._left_bottom = (x, y + half_height * 2)
@@ -60,7 +60,7 @@ class VirtualFrame:
 
     @property
     def right_bottom(self)->Tuple[int, int]:
-        return self._left_bottom
+        return self._right_bottom
 
     def create_line(self, position: Position)->Tuple[Tuple[int, int], Tuple[int, int]]:
         return position_map[position](self)
