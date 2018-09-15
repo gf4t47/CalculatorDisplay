@@ -1,4 +1,4 @@
 
 \.idea/
-
-/**/__pycache__/
+/src/lines.json
+**/__pycache__/
