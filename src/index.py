@@ -1,3 +1,3 @@
 from src.main import display
 
-display(23456)
+display(17)

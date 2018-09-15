@@ -19,10 +19,6 @@ class Digit(VirtualFrame):
         return self._height
 
     @property
-    def origin(self):
-        return self.left_top
-
-    @property
     def lines(self) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
         return self._lines
 
@@ -50,8 +46,9 @@ class One(Digit):
 
     def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]])-> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
         centered = [((start_x + self.length // 2, start_y), (end_x + self.length // 2, end_y)) for (start_x, start_y), (end_x, end_y) in lines]
+        origin_x, origin_y = self.left_top
+        centered.append(((origin_x, origin_y + (self.height // 8)), (origin_x + self.length // 2, origin_y)))  # head decoration
         centered.append(self.create_line(Position.BOTTOM_X))  # bottom decoration
-        centered.append(((self.origin[0], self.origin[1] + (self.height // 8)), (self.origin[0] + self.length // 2, self.origin[1])))  # head decoration
         return centered
 
 
