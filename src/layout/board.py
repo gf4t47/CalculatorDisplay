@@ -4,14 +4,13 @@ from src.character.digits import create_digit, Digit
 
 
 class Board:
-    def __init__(self, length: int, height: int, y_down_direction: bool = False):
-        self._length = length
-        self._height = height
+    def __init__(self, size: Tuple[int, int], y_down_direction: bool = False):
+        self._width, self._height = size
         self._y_down_direction = y_down_direction
 
     @property
-    def length(self) -> int:
-        return self._length
+    def width(self) -> int:
+        return self._width
 
     @property
     def height(self) -> int:
@@ -22,13 +21,13 @@ class Board:
         return self._y_down_direction
 
     def _layout(self, size: int) -> [Tuple[Tuple[int, int], int, int]]:
-        frame = self.length // size
+        frame = self.width // size
         offset = 4 if frame // 5 <= 4 else frame // 5
-        length = frame - offset
-        height = length * 2 if (length * 2) <= self.height else self.height
+        width = frame - offset
+        height = width * 2 if (width * 2) <= self.height else self.height
 
-        print(f'length={length}', f'offset={offset}', f'height={height}')
-        return [((idx * frame, 0), length, (height / 2) * (1 if self.y_down_direction else -1)) for idx in range(0, size)]
+        print(f'width={width}', f'offset={offset}', f'height={height}')
+        return [((idx * frame, 0), width, (height / 2) * (1 if self.y_down_direction else -1)) for idx in range(0, size)]
 
     def digitalize(self, num: int) -> [Digit]:
         chars = [c for c in str(num)]

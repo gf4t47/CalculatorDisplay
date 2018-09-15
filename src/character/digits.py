@@ -4,9 +4,9 @@ from src.character.frame import VirtualFrame, Position
 
 
 class Digit(VirtualFrame):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
-        self._length = length
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
+        self._length = width
         self._height = half_height * 2
         self._lines = []
 
@@ -28,8 +28,8 @@ class Digit(VirtualFrame):
 
 
 class Zero(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
@@ -41,8 +41,8 @@ class Zero(Digit):
 
 
 class One(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = self.decorate([
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.LEFT_DOWN_Y),
@@ -56,8 +56,8 @@ class One(Digit):
 
 
 class Two(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.RIGHT_UP_Y),
@@ -68,8 +68,8 @@ class Two(Digit):
 
 
 class Three(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.RIGHT_UP_Y),
@@ -80,8 +80,8 @@ class Three(Digit):
 
 
 class Four(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.RIGHT_UP_Y),
@@ -91,8 +91,8 @@ class Four(Digit):
 
 
 class Five(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
@@ -103,8 +103,8 @@ class Five(Digit):
 
 
 class Six(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
@@ -116,8 +116,8 @@ class Six(Digit):
 
 
 class Seven(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.RIGHT_UP_Y),
@@ -126,8 +126,8 @@ class Seven(Digit):
 
 
 class Eight(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
@@ -140,8 +140,8 @@ class Eight(Digit):
 
 
 class Nine(Digit):
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
-        super().__init__(origin, length, half_height)
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+        super().__init__(origin, width, half_height)
         self._lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
@@ -165,9 +165,9 @@ digit_map = {
 }
 
 
-def create_digit(digit: str, origin: Tuple[int, int], length: int, half_height: int)->Digit:
-    # print(f'origin={origin}', f'length={length}', f'height/2={half_height}')
+def create_digit(digit: str, origin: Tuple[int, int], width: int, half_height: int)->Digit:
+    # print(f'origin={origin}', f'width={width}', f'height/2={half_height}')
     if digit in digit_map:
-        return digit_map[digit](origin, length, half_height)
+        return digit_map[digit](origin, width, half_height)
 
     raise ValueError(f'Unknown digit {digit}')

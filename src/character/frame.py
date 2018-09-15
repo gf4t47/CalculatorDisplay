@@ -24,19 +24,19 @@ position_map = {
 
 
 class VirtualFrame:
-    def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
         """
         :param origin: frame coordinate
-        :param length: length in x axle
+        :param width: width in x axle
         :param half_height: half of height in y axle
         """
         x, y = origin
         self._left_top = (x, y)
         self._left_median = (x, y + half_height)
         self._left_bottom = (x, y + half_height * 2)
-        self._right_top = (x + length, y)
-        self._right_median = (x + length, y + half_height)
-        self._right_bottom = (x + length, y + half_height * 2)
+        self._right_top = (x + width, y)
+        self._right_median = (x + width, y + half_height)
+        self._right_bottom = (x + width, y + half_height * 2)
 
     @property
     def left_top(self)->Tuple[int, int]:
