@@ -6,7 +6,21 @@ from src.character.frame import VirtualFrame, Position
 class Digit(VirtualFrame):
     def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
         super().__init__(origin, length, half_height)
+        self._length = length
+        self._height = half_height * 2
         self._lines = []
+
+    @property
+    def length(self):
+        return self._length
+
+    @property
+    def height(self):
+        return self._height
+
+    @property
+    def origin(self):
+        return self.left_top
 
     @property
     def lines(self) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
@@ -29,10 +43,16 @@ class Zero(Digit):
 class One(Digit):
     def __init__(self, origin: Tuple[int, int], length: int, half_height: int):
         super().__init__(origin, length, half_height)
-        self._lines = [
+        self._lines = self.decorate([
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.LEFT_DOWN_Y),
-        ]
+        ])
+
+    def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]])-> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+        centered = [((start_x + self.length // 2, start_y), (end_x + self.length // 2, end_y)) for (start_x, start_y), (end_x, end_y) in lines]
+        centered.append(self.create_line(Position.BOTTOM_X))  # bottom decoration
+        centered.append(((self.origin[0], self.origin[1] + (self.height // 8)), (self.origin[0] + self.length // 2, self.origin[1])))  # head decoration
+        return centered
 
 
 class Two(Digit):
@@ -146,6 +166,7 @@ digit_map = {
 
 
 def create_digit(digit: str, origin: Tuple[int, int], length: int, half_height: int)->Digit:
+    # print(f'origin={origin}', f'length={length}', f'height/2={half_height}')
     if digit in digit_map:
         return digit_map[digit](origin, length, half_height)
 

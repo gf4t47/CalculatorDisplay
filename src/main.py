@@ -22,4 +22,4 @@ def display(num: int) -> None:
     _draw(lines)
 
 
-display(70123)
+display(70128)

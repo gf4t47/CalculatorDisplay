@@ -22,14 +22,13 @@ class Board:
         return self._y_down_direction
 
     def _layout(self, size: int) -> [Tuple[Tuple[int, int], int, int]]:
-        frame = self.length / size
-        offset = 4 if frame / 5 <= 4 else frame / 5
+        frame = self.length // size
+        offset = 4 if frame // 5 <= 4 else frame // 5
         length = frame - offset
-        height = length * 2 if length * 2 <= self.height else self.height
+        height = length * 2 if (length * 2) <= self.height else self.height
 
-        print(f'length={length}', f'offset = {offset}', f'height={height}')
-
-        return [((idx * frame, 0), length, (height / 2) * 1 if self.y_down_direction else -1) for idx in range(0, size)]
+        print(f'length={length}', f'offset={offset}', f'height={height}')
+        return [((idx * frame, 0), length, (height / 2) * (1 if self.y_down_direction else -1)) for idx in range(0, size)]
 
     def digitalize(self, num: int) -> [Digit]:
         chars = [c for c in str(num)]
