@@ -45,7 +45,7 @@ def _svg(num: int, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]], size: T
 
 
 def _build_model(num: int)->List[Tuple[Tuple[int, int], Tuple[int, int]]]:
-    board = Board(board_size, True)
+    board = Board(board_size)
     digits = board.digitalize(num)
     return functools.reduce(lambda accu, cur: accu + cur, [digit.lines for digit in digits], [])
 

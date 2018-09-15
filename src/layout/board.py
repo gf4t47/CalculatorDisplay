@@ -4,7 +4,7 @@ from src.character.digits import create_digit, Digit
 
 
 class Board:
-    def __init__(self, size: Tuple[int, int], y_down_direction: bool = False):
+    def __init__(self, size: Tuple[int, int], y_down_direction: bool = True):
         self._width, self._height = size
         self._y_down_direction = y_down_direction
 
