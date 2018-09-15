@@ -21,10 +21,10 @@ class Board:
         return self._y_down_direction
 
     def _layout(self, size: int) -> [Tuple[Tuple[int, int], int, int]]:
-        frame = self.width // size
+        frame = self.height // 2 if self.width // size > self.height // 2 else self.width // size
         offset = 4 if frame // 5 <= 4 else frame // 5
         width = frame - offset
-        height = width * 2 if (width * 2) <= self.height else self.height
+        height = width * 2 if width * 2 <= self.height else self.height
 
         print(f'width={width}', f'offset={offset}', f'height={height}')
         return [((idx * frame, 0), width, (height / 2) * (1 if self.y_down_direction else -1)) for idx in range(0, size)]

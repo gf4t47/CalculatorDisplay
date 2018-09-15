@@ -147,7 +147,8 @@ class Nine(Digit):
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.RIGHT_UP_Y),
             self.create_line(Position.MEDIAN_X),
-            self.create_line(Position.RIGHT_DOWN_Y)
+            self.create_line(Position.RIGHT_DOWN_Y),
+            self.create_line(Position.BOTTOM_X)
         ]
 
 
