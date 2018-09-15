@@ -1,12 +1,11 @@
-import functools
 import json
 from typing import List, Tuple
 
 import svgwrite
-
-from src.layout.board import Board
-from matplotlib import pyplot as pl
 from matplotlib import collections as mc
+from matplotlib import pyplot as pl
+
+from src.layout.board import build_lines
 
 board_size = 600, 200
 
@@ -44,17 +43,13 @@ def _svg(num: int, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]], size: T
     return file_name
 
 
-def _build_model(num: int, y_direct_down=True) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
-    board = Board(board_size, y_direct_down)
-    digits = board.digitalize(num)
-    return functools.reduce(lambda accu, cur: accu + cur, [digit.lines for digit in digits], [])
-
-
 def write(num: int) -> str:
-    file_name = _save_json(num, _build_model(num))
-    json_obj = _load_json(file_name)
-    return _svg(num, json_obj, board_size)
+    lines = build_lines(num, board_size)
+    json_file = _save_json(num, lines)
+    json_array = _load_json(json_file)
+    return _svg(num, json_array, board_size)
 
 
 def display(num: int) -> None:
-    _draw(_build_model(num))
+    lines = build_lines(num, board_size)
+    _draw(lines)

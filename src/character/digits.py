@@ -6,13 +6,13 @@ from src.character.frame import VirtualFrame, Position
 class Digit(VirtualFrame):
     def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
         super().__init__(origin, width, half_height)
-        self._length = width
+        self._width = width
         self._height = half_height * 2
         self._lines = []
 
     @property
-    def length(self):
-        return self._length
+    def width(self):
+        return self._width
 
     @property
     def height(self):
@@ -26,14 +26,20 @@ class Digit(VirtualFrame):
 class Zero(Digit):
     def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
         super().__init__(origin, width, half_height)
-        self._lines = [
+        self._lines = self.decorate([
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.RIGHT_UP_Y),
             self.create_line(Position.LEFT_DOWN_Y),
             self.create_line(Position.RIGHT_DOWN_Y),
             self.create_line(Position.BOTTOM_X)
-        ]
+        ])
+
+    def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]])-> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+        width = (self.width - self.width // 24) // 2
+        height = self.height // 24
+        lines.append(((self.left_median[0] + width, self.left_median[1] - height), (self.right_median[0] - width, self.right_median[1] + height)))
+        return lines
 
 
 class One(Digit):
@@ -45,9 +51,9 @@ class One(Digit):
         ])
 
     def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]])-> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
-        centered = [((start_x + self.length // 2, start_y), (end_x + self.length // 2, end_y)) for (start_x, start_y), (end_x, end_y) in lines]
+        centered = [((start_x + self.width // 2, start_y), (end_x + self.width // 2, end_y)) for (start_x, start_y), (end_x, end_y) in lines]
         origin_x, origin_y = self.left_top
-        centered.append(((origin_x, origin_y + (self.height // 8)), (origin_x + self.length // 2, origin_y)))  # head decoration
+        centered.append(((origin_x, origin_y + (self.height // 8)), (origin_x + self.width // 2, origin_y)))  # head decoration
         centered.append(self.create_line(Position.BOTTOM_X))  # bottom decoration
         return centered
 
@@ -115,11 +121,17 @@ class Six(Digit):
 class Seven(Digit):
     def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
         super().__init__(origin, width, half_height)
-        self._lines = [
+        self._lines = self.decorate([
             self.create_line(Position.TOP_X),
-            self.create_line(Position.RIGHT_UP_Y),
-            self.create_line(Position.RIGHT_DOWN_Y)
-        ]
+            self.create_line(Position.TOP_RIGHT_TO_BOTTOM_MEDIAN)
+        ])
+
+    def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+        offset = self.width // 4
+        width = self.width // 24
+        height = self.height // 24
+        lines.append(((self.right_median[0] - offset - width, self.right_median[1] - height), (self.right_median[0] - offset + width, self.right_median[1] + height)))
+        return lines
 
 
 class Eight(Digit):

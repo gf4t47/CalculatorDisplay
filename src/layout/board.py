@@ -1,4 +1,5 @@
-from typing import Tuple
+import functools
+from typing import Tuple, List
 
 from src.character.digits import create_digit, Digit
 
@@ -33,3 +34,9 @@ class Board:
         chars = [c for c in str(num)]
         layouts = self._layout(len(chars))
         return [create_digit(key, *paras) for key, paras in zip(chars, layouts)]
+
+
+def build_lines(num: int, size: Tuple[int, int], y_direct_down=True) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
+    board = Board(size, y_direct_down)
+    digits = board.digitalize(num)
+    return functools.reduce(lambda accu, cur: accu + cur, [digit.lines for digit in digits], [])

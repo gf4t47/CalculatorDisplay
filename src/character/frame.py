@@ -10,6 +10,7 @@ class Position(Enum):
     LEFT_DOWN_Y = 5
     RIGHT_UP_Y = 6
     RIGHT_DOWN_Y = 7
+    TOP_RIGHT_TO_BOTTOM_MEDIAN = 8
 
 
 position_map = {
@@ -20,6 +21,7 @@ position_map = {
     Position.LEFT_DOWN_Y: lambda frame: (frame.left_median, frame.left_bottom),
     Position.RIGHT_UP_Y: lambda frame: (frame.right_top, frame.right_median),
     Position.RIGHT_DOWN_Y: lambda frame: (frame.right_median, frame.right_bottom),
+    Position.TOP_RIGHT_TO_BOTTOM_MEDIAN: lambda frame: (frame.right_top, ((frame.left_bottom[0] + frame.right_bottom[0]) // 2, frame.left_bottom[1]))
 }
 
 
