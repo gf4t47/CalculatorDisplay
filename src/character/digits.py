@@ -24,16 +24,17 @@ class Digit(VirtualFrame):
 
 
 class Zero(Digit):
-    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int, decorated: bool):
         super().__init__(origin, width, half_height)
-        self._lines = self.decorate([
+        raw_lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.RIGHT_UP_Y),
             self.create_line(Position.LEFT_DOWN_Y),
             self.create_line(Position.RIGHT_DOWN_Y),
             self.create_line(Position.BOTTOM_X)
-        ])
+        ]
+        self._lines = self.decorate(raw_lines) if decorated else raw_lines
 
     def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]])-> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
         width = (self.width - self.width // 24) // 2
@@ -43,12 +44,13 @@ class Zero(Digit):
 
 
 class One(Digit):
-    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int, decorated: bool):
         super().__init__(origin, width, half_height)
-        self._lines = self.decorate([
+        raw_lines = [
             self.create_line(Position.LEFT_UP_Y),
             self.create_line(Position.LEFT_DOWN_Y),
-        ])
+        ]
+        self._lines = self.decorate(raw_lines) if decorated else raw_lines
 
     def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]])-> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
         centered = [((start_x + self.width // 2, start_y), (end_x + self.width // 2, end_y)) for (start_x, start_y), (end_x, end_y) in lines]
@@ -119,12 +121,13 @@ class Six(Digit):
 
 
 class Seven(Digit):
-    def __init__(self, origin: Tuple[int, int], width: int, half_height: int):
+    def __init__(self, origin: Tuple[int, int], width: int, half_height: int, decorated: bool):
         super().__init__(origin, width, half_height)
-        self._lines = self.decorate([
+        raw_lines = [
             self.create_line(Position.TOP_X),
             self.create_line(Position.TOP_RIGHT_TO_BOTTOM_MEDIAN)
-        ])
+        ]
+        self._lines = self.decorate(raw_lines) if decorated else raw_lines
 
     def decorate(self, lines: List[Tuple[Tuple[int, int], Tuple[int, int]]]) -> List[Tuple[Tuple[int, int], Tuple[int, int]]]:
         offset = self.width // 4
@@ -162,14 +165,14 @@ class Nine(Digit):
 
 
 digit_map = {
-    '0': lambda coord, l, h: Zero(coord, l, h),
-    '1': lambda coord, l, h: One(coord, l, h),
+    '0': lambda coord, l, h: Zero(coord, l, h, True),
+    '1': lambda coord, l, h: One(coord, l, h, True),
     '2': lambda coord, l, h: Two(coord, l, h),
     '3': lambda coord, l, h: Three(coord, l, h),
     '4': lambda coord, l, h: Four(coord, l, h),
     '5': lambda coord, l, h: Five(coord, l, h),
     '6': lambda coord, l, h: Six(coord, l, h),
-    '7': lambda coord, l, h: Seven(coord, l, h),
+    '7': lambda coord, l, h: Seven(coord, l, h, True),
     '8': lambda coord, l, h: Eight(coord, l, h),
     '9': lambda coord, l, h: Nine(coord, l, h),
 }
